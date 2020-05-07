@@ -2,7 +2,6 @@ package montage;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import film.Film;
 import film.Films;
@@ -54,7 +53,12 @@ public class CFilm implements Film {
 		f.rembobiner();
 	}
 
-	private void ajouterImage(char[][] écran) {
+	// initialiser nv images vides
+	public void ajouterImage(int largeur, int hauteur) {
+		images.add(new char[largeur][hauteur]);
+	}
+	
+	public void ajouterImage(char[][] écran) {
 		char[][] image = new char[largeur][hauteur];
 		for (int i = 0; i < écran.length; i++)
 			for (int j = 0; j < écran[0].length; j++)
@@ -71,10 +75,6 @@ public class CFilm implements Film {
 		images = tmp.images;
 	}
 
-	public void ajouterImage(int largeur, int hauteur) {
-		images.add(new char[largeur][hauteur]);
-	}
-
 	public void encadrer(char c) {
 		for (char[][] image : images) {
 			for (int i = 0; i < largeur; i++)
@@ -84,6 +84,7 @@ public class CFilm implements Film {
 		}
 	}
 
+	// TODO ceci doit dégager
 	public char[][] getImage(int i) {
 		return images.get(i);
 	}

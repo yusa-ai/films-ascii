@@ -42,9 +42,7 @@ public class LaDiagonaleDuFou implements Film {
 	 * La projection (puis la sauvegarde) d'un tel film.
 	 */
 	public static void main(String[] args) {
-		Film f1 = new LaDiagonaleDuFou();
-		Film f2 = Montage.encadrer(f1);
-		Film film = Montage.coller(f1, f2);
+		Film film = new LaDiagonaleDuFou();
 		Films.projeter(film);
 		film.rembobiner();
 		try {

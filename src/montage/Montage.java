@@ -29,11 +29,15 @@ public class Montage {
 	}
 
 	public static Film encadrer(Film f) {
+		return encadrer(f, '*');
+	}
+	
+	public static Film encadrer(Film f, char c) {
 		char[][] écran = Films.getEcran(f);
 		int nbImages = 0;
 
 		// Création d'un nouveau film avec autant d'images (d'abord vides) que
-		// f, avec dimensions étendues de 2 unités pour le cadre
+		// f, aux dimensions étendues de 2 unités pour le cadre
 		while (f.suivante(écran))
 			nbImages++; // compte le nombre d'images du film
 		f.rembobiner();
@@ -41,7 +45,7 @@ public class Montage {
 		for (int i = 0; i < nbImages; i++)
 			cf.ajouterImage(cf.largeur(), cf.hauteur());
 
-		cf.encadrer('*');
+		cf.encadrer(c);
 
 		// TODO méthode de collage à refactoriser pour l'attendu n°5 ?
 		// Réécriture des images originales du film, à l'intérieur de leur cadre
