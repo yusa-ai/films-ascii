@@ -10,7 +10,7 @@ public class CFilm implements Film {
 
 	private int largeur, hauteur, curseur;
 	private List<char[][]> images;
-	
+
 	public CFilm(int largeur, int hauteur) {
 		this.largeur = largeur;
 		this.hauteur = hauteur;
@@ -57,7 +57,7 @@ public class CFilm implements Film {
 	public void ajouterImage(int largeur, int hauteur) {
 		images.add(new char[largeur][hauteur]);
 	}
-	
+
 	public void ajouterImage(char[][] écran) {
 		char[][] image = new char[largeur][hauteur];
 		for (int i = 0; i < écran.length; i++)
@@ -84,9 +84,21 @@ public class CFilm implements Film {
 		}
 	}
 
-	// TODO ceci doit dégager
-	public char[][] getImage(int i) {
-		return images.get(i);
+	public void incruster(Film f, int lar, int hau) {
+		char[][] écran = Films.getEcran(f);
+		int nbImages = 0;
+		while (f.suivante(écran))
+			nbImages++; // compte le nombre d'images du film
+		f.rembobiner();
+		Film tmp = Montage.extraire(f, 0, nbImages - 1); // copie intégrale
+		nbImages = 0;
+		while (tmp.suivante(écran) && nbImages < images.size()) {
+			for (int j = 0; j < tmp.largeur(); j++)
+				for (int k = 0; k < tmp.hauteur(); k++)
+					if (j + lar < largeur && k + hau < hauteur)
+						images.get(nbImages)[j + lar][k + hau] = écran[j][k];
+			nbImages++;
+		}
 	}
 
 }

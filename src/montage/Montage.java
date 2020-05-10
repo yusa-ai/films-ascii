@@ -35,7 +35,6 @@ public class Montage {
 	public static Film encadrer(Film f, char c) {
 		char[][] écran = Films.getEcran(f);
 		int nbImages = 0;
-
 		// Création d'un nouveau film avec autant d'images (d'abord vides) que
 		// f, aux dimensions étendues de 2 unités pour le cadre
 		while (f.suivante(écran))
@@ -43,20 +42,11 @@ public class Montage {
 		f.rembobiner();
 		CFilm cf = new CFilm(f.largeur() + CADRE, f.hauteur() + CADRE);
 		for (int i = 0; i < nbImages; i++)
-			cf.ajouterImage(cf.largeur(), cf.hauteur());
+			cf.ajouterImage(cf.largeur(), cf.hauteur()); // nv images vides
 
 		cf.encadrer(c);
 
-		// TODO méthode de collage à refactoriser pour l'attendu n°5 ?
-		// Réécriture des images originales du film, à l'intérieur de leur cadre
-		Film tmp = extraire(f, 0, nbImages - 1); // copie intégrale
-		nbImages = 0;
-		while (tmp.suivante(écran)) {
-			for (int j = 0; j < tmp.largeur(); j++)
-				for (int k = 0; k < tmp.hauteur(); k++)
-					cf.getImage(nbImages)[j + 1][k + 1] = écran[j][k];
-			nbImages++;
-		}
+		cf.incruster(f, 1, 1);
 		return cf;
 	}
 
@@ -65,6 +55,13 @@ public class Montage {
 				Math.max(f1.hauteur(), f2.hauteur()));
 		cf.ajouterFilm(f1);
 		cf.ajouterFilm(f2);
+		return cf;
+	}
+	
+	public static Film incruster(Film f1, Film f2, int l, int h) {
+		CFilm cf = new CFilm(f1.largeur(), f1.hauteur());
+		cf.ajouterFilm(f1);
+		cf.incruster(f2, l, h);
 		return cf;
 	}
 }
