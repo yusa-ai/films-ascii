@@ -6,16 +6,18 @@ import java.util.ArrayList;
 import film.Film;
 import film.Films;
 
-public class CFilm implements Film {
+public class FilmMonté implements Film {
 
-	private int largeur, hauteur, curseur;
+	private int largeur;
+	private int hauteur;
+	private int curseur;
 	private List<char[][]> images;
 
-	public CFilm(int largeur, int hauteur) {
-		this.largeur = largeur;
-		this.hauteur = hauteur;
-		this.curseur = 0;
-		images = new ArrayList<char[][]>();
+	public FilmMonté(int l, int h) {
+		largeur = l;
+		hauteur = h;
+		curseur = 0;
+		images = new ArrayList<>();
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class CFilm implements Film {
 	}
 
 	public void extraire(int first, int last) {
-		CFilm tmp = new CFilm(largeur, hauteur);
+		FilmMonté tmp = new FilmMonté(largeur, hauteur);
 		for (int i = 0; i < images.size(); i++) {
 			if (i >= first && i <= last)
 				tmp.ajouterImage(images.get(i));

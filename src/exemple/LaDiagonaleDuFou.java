@@ -43,9 +43,9 @@ public class LaDiagonaleDuFou implements Film {
 	 */
 	public static void main(String[] args) {
 		Film f = new LaDiagonaleDuFou();
-		Film f2 = Montage.extraire(f, 0, 0);
-		Film f3 = Montage.encadrer(f2);
-		Film film = Montage.incruster(f3, f3, 1, 1);
+		Film f2 = Montage.extraire(f, 0, 1);
+		Film f3 = Montage.extraire(f, 0, 0);
+		Film film = Montage.incruster(f2, f3, 1, 1);
 		Films.projeter(film);
 		film.rembobiner();
 		try {

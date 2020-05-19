@@ -10,28 +10,28 @@ public class Montage {
 	}
 
 	public static Film répéter(Film f, int nb) {
-		CFilm cf = new CFilm(f.largeur(), f.hauteur());
+		FilmMonté fm = new FilmMonté(f.largeur(), f.hauteur());
 		if (nb <= 0)
-			return cf; // film vide
+			return fm; // film vide
 		for (int i = 0; i <= nb; i++) {
-			cf.ajouterFilm(f);
+			fm.ajouterFilm(f);
 		}
-		return cf;
+		return fm;
 	}
 
 	public static Film extraire(Film f, int first, int last) {
-		CFilm cf = new CFilm(f.largeur(), f.hauteur());
+		FilmMonté fm = new FilmMonté(f.largeur(), f.hauteur());
 		if (last < first)
-			return cf;
-		cf.ajouterFilm(f);
-		cf.extraire(first, last);
-		return cf;
+			return fm;
+		fm.ajouterFilm(f);
+		fm.extraire(first, last);
+		return fm;
 	}
 
 	public static Film encadrer(Film f) {
 		return encadrer(f, '*');
 	}
-	
+
 	public static Film encadrer(Film f, char c) {
 		char[][] écran = Films.getEcran(f);
 		int nbImages = 0;
@@ -40,28 +40,28 @@ public class Montage {
 		while (f.suivante(écran))
 			nbImages++; // compte le nombre d'images du film
 		f.rembobiner();
-		CFilm cf = new CFilm(f.largeur() + CADRE, f.hauteur() + CADRE);
+		FilmMonté fm = new FilmMonté(f.largeur() + CADRE, f.hauteur() + CADRE);
 		for (int i = 0; i < nbImages; i++)
-			cf.ajouterImage(cf.largeur(), cf.hauteur()); // nv images vides
+			fm.ajouterImage(fm.largeur(), fm.hauteur()); // nv images vides
 
-		cf.encadrer(c);
+		fm.encadrer(c);
 
-		cf.incruster(f, 1, 1);
-		return cf;
+		fm.incruster(f, 1, 1);
+		return fm;
 	}
 
 	public static Film coller(Film f1, Film f2) {
-		CFilm cf = new CFilm(Math.max(f1.largeur(), f2.largeur()),
+		FilmMonté fm = new FilmMonté(Math.max(f1.largeur(), f2.largeur()),
 				Math.max(f1.hauteur(), f2.hauteur()));
-		cf.ajouterFilm(f1);
-		cf.ajouterFilm(f2);
-		return cf;
+		fm.ajouterFilm(f1);
+		fm.ajouterFilm(f2);
+		return fm;
 	}
-	
+
 	public static Film incruster(Film f1, Film f2, int l, int h) {
-		CFilm cf = new CFilm(f1.largeur(), f1.hauteur());
-		cf.ajouterFilm(f1);
-		cf.incruster(f2, l, h);
-		return cf;
+		FilmMonté fm = new FilmMonté(f1.largeur(), f1.hauteur());
+		fm.ajouterFilm(f1);
+		fm.incruster(f2, l, h);
+		return fm;
 	}
 }
