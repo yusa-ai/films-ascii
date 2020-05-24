@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import film.Film;
 import film.Films;
 
+/**
+ * Implémentation de Film utile au Montage
+ * @author Ryan Malonzo
+ *
+ */
 public class FilmMonté implements Film {
 
 	private int largeur;
@@ -46,6 +51,10 @@ public class FilmMonté implements Film {
 		curseur = 0;
 	}
 
+	/**
+	 * Ajoute les images d'un film f aux images du film, dans la liste
+	 * @param f, le film dont il faut ajouter les images
+	 */
 	public void ajouterFilm(Film f) {
 		char[][] écran = Films.getEcran(f);
 		while (f.suivante(écran)) {
@@ -55,19 +64,33 @@ public class FilmMonté implements Film {
 		f.rembobiner();
 	}
 
-	// initialiser nv images vides
+	/**
+	 * Initialise une nouvelle image vide et l'ajoute dans la liste
+	 * @param largeur, largeur de l'image
+	 * @param hauteur, hauteur de l'image
+	 */
 	public void ajouterImage(int largeur, int hauteur) {
 		images.add(new char[largeur][hauteur]);
 	}
 
-	public void ajouterImage(char[][] écran) {
+	/**
+	 * Ajoute une image à la liste d'images
+	 * @param img, l'image à ajouter
+	 */
+	public void ajouterImage(char[][] img) {
 		char[][] image = new char[largeur][hauteur];
-		for (int i = 0; i < écran.length; i++)
-			for (int j = 0; j < écran[0].length; j++)
-				image[i][j] = écran[i][j];
+		for (int i = 0; i < img.length; i++)
+			for (int j = 0; j < img[0].length; j++)
+				image[i][j] = img[i][j];
 		images.add(image);
 	}
 
+	/**
+	 * Extrait les images de rang first à last et remplace la liste courante
+	 * par ces images
+	 * @param first, rang de la première image
+	 * @param last, rang de la dernière image
+	 */
 	public void extraire(int first, int last) {
 		FilmMonté tmp = new FilmMonté(largeur, hauteur);
 		for (int i = 0; i < images.size(); i++) {
@@ -77,6 +100,10 @@ public class FilmMonté implements Film {
 		images = tmp.images;
 	}
 
+	/**
+	 * Encadre les images du film par le caractère spécifié
+	 * @param c, le caractère d'encadrement
+	 */
 	public void encadrer(char c) {
 		for (char[][] image : images) {
 			for (int i = 0; i < largeur; i++)
@@ -86,6 +113,12 @@ public class FilmMonté implements Film {
 		}
 	}
 
+	/**
+	 * Incruste un film au point d'incrustation spécifié
+	 * @param f, le film à incruster
+	 * @param lar, coordonnée x du point d'incrustation
+	 * @param hau, coordonnée y du point d'incrustation
+	 */
 	public void incruster(Film f, int lar, int hau) {
 		char[][] écran = Films.getEcran(f);
 		int nbImages = 0;
